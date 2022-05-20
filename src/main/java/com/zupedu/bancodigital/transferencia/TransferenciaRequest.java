@@ -17,6 +17,17 @@ public class TransferenciaRequest {
     @NotNull
     private TransferenciaContaDto contaDestino;
 
+    public TransferenciaContaDto getContaOrigem() {
+        return contaOrigem;
+    }
+
+    public TransferenciaContaDto getContaDestino() {
+        return contaDestino;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;

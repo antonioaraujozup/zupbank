@@ -19,17 +19,17 @@ public class ContaController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> inserir(@RequestBody ContaRequest request){
-        logger.info("Cadastrando Conta");
+        logger.info("Cadastrando Conta (agencia = {}, numero = {})", request.getAgencia(), request.getNumero());
         var conta = request.toModel();
 
         if(contaRepository.findByDocumentoTitular(conta.getDocumentoTitular()).isPresent()){
-
+            logger.warn("Não foi possível cadastrar a conta (agencia = {}, numero = {}) pois já existe outra conta com o CPF informado", request.getAgencia(), request.getNumero());
             return ResponseEntity.badRequest().body("Já existe uma conta com mesmo CPF!");
 
         }else{
             conta = contaRepository.save(conta);
 
-            logger.info("Conta cadastrada");
+            logger.info("Conta cadastrada (agencia = {}, numero = {})", request.getAgencia(), request.getNumero());
 
             return ResponseEntity
                     .status(HttpStatus.CREATED)
@@ -41,8 +41,10 @@ public class ContaController {
     public void excluir(@PathVariable Long id){
         var conta = contaRepository.findById(id).orElseThrow(ContaIdInexistenteException::new);
 
-        logger.info("Conta excluída com sucesso");
+        logger.info("Excluindo conta (agencia = {}, numero = {})", conta.getAgencia(), conta.getNumero());
 
         contaRepository.delete(conta);
+
+        logger.info("Conta (agencia = {}, numero = {}) excluída com sucesso", conta.getAgencia(), conta.getNumero());
     }
 }

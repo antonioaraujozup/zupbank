@@ -44,4 +44,12 @@ public class ContaRequest {
         return new Conta(this.documentoTitular, this.nomeTitular,
                 this.agencia, this.numero, this.saldo);
     }
+
+    public long getNumero() {
+        return numero;
+    }
+
+    public int getAgencia() {
+        return agencia;
+    }
 }
