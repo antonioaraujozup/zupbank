@@ -14,3 +14,18 @@ spring:
     console:
       enabled: true
       path: /h2
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: info, configprops, health, prometheus
+  info:
+    env:
+      enabled: true
+info:
+  application:
+    name: ZupBank
+    description: Aplicação do Banco Digital da ZUP
